@@ -36,6 +36,8 @@ namespace GameTanks
         private float fireCounter = 0.0f;
         private const float shootOffset = 30.0f;
 
+        // Mine data
+        private int mineCounter = 0;
         // Health data
         private const int maxLives = 3;
         private int currentLives = maxLives;
@@ -207,6 +209,15 @@ namespace GameTanks
                     inputLeft = true;
                 }
 
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_SPACE)
+                {
+                    fireBullet();
+                }
+
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_E)
+                {
+                    dropMine();
+                }
             }
             else if (eventType == "KeyUp")
             {
@@ -230,20 +241,12 @@ namespace GameTanks
                     inputLeft = false;
                 }
             }
-
-            if (eventType == "KeyUp")
-            {
-                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_SPACE)
-                {
-                    fireBullet();
-                }
-            }
         }
 
         public void onCollisionEnter(PhysicsBody x)
         {
             // Reduce health on hit
-            if (x.Parent.checkTag("Bullet2") == true)
+            if (x.Parent.checkTag("Bullet2") == true || x.Parent.checkTag("Mine2") == true)
             {
                 currentLives--;
                 if (currentLives <= 0)
@@ -267,7 +270,14 @@ namespace GameTanks
 
         public void onCollisionStay(PhysicsBody x)
         {
-            speed = t1speed.Slow;
+            if (x.Parent.checkTag("Mine1") == true || x.Parent.checkTag("Mine2") == true)
+            {
+                speed = t1speed.Normal;
+            }
+            else
+            {
+                speed = t1speed.Slow;
+            }
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -322,6 +332,27 @@ namespace GameTanks
                 h1.Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath("0Health.png");
                 Bootstrap.getDisplay().addToDraw(h1);
             }
+        }
+        public void dropMine()
+        {
+            if (mineCounter > 1)
+            {
+                return;
+            }
+
+            // Actually fire
+            Mine1 mine = new Mine1();
+
+            Vector2 cen = Transform.Centre;
+            Vector2 spawnLocation = shootOffset * -Transform.Forward;
+            spawnLocation += cen;
+
+            mine.setupMine(this, spawnLocation.X, spawnLocation.Y);
+
+            mineCounter = 1;
+
+            // Play sound
+            //Bootstrap.getSound().playSound("fire.wav");
         }
     }
 
@@ -525,8 +556,18 @@ namespace GameTanks
                 {
                     inputLeft = true;
                 }
+                
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_RETURN)
+                {
+                    fireBullet();
+                }
 
+                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_SLASH)
+                {
+                    dropMine();
+                }
             }
+
             else if (eventType == "KeyUp")
             {
                 if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_UP)
@@ -549,19 +590,11 @@ namespace GameTanks
                     inputLeft = false;
                 }
             }
-
-            if (eventType == "KeyUp")
-            {
-                if (inp.Key == (int)SDL.SDL_Scancode.SDL_SCANCODE_RETURN)
-                {
-                    fireBullet();
-                }
-            }
         }
 
         public void onCollisionEnter(PhysicsBody x)
         {
-            if (x.Parent.checkTag("Bullet1") == true)
+            if (x.Parent.checkTag("Bullet1") == true || x.Parent.checkTag("Mine1") == true)
             {
                 
                 currentLives--;
@@ -587,7 +620,14 @@ namespace GameTanks
 
         public void onCollisionStay(PhysicsBody x)
         {
-            speed = t2speed.Slow;
+            if (x.Parent.checkTag("Mine1") == true || x.Parent.checkTag("Mine2") == true)
+            {
+                speed = t2speed.Normal;
+            }
+            else
+            {
+                speed = t2speed.Slow;
+            }
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -641,5 +681,25 @@ namespace GameTanks
                 Bootstrap.getDisplay().addToDraw(h2);
             }
         }
+
+        public void dropMine()
+        {
+
+            // Actually fire
+            Mine2 mine = new Mine2();
+
+            Vector2 cen = Transform.Centre;
+            Vector2 spawnLocation = shootOffset * -Transform.Forward;
+            spawnLocation += cen;
+
+            mine.setupMine(this, spawnLocation.X, spawnLocation.Y);
+            
+            // Reset fire rate counter
+            //fireCounter = 0.0f;
+
+            // Play sound
+            //Bootstrap.getSound().playSound("fire.wav");
+        }
+
     }
 }
