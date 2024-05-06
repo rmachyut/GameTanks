@@ -375,6 +375,7 @@ namespace GameTanks
 
             // Play sound
             //Bootstrap.getSound().playSound("fire.wav");
+        }
 
         // Health regeneration method
         private void regenerateHealth()
