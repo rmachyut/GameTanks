@@ -37,7 +37,12 @@ namespace GameTanks
         private const float shootOffset = 30.0f;
 
         // Mine data
-        private int mineCounter = 0;
+        //private int mineCounter = 0;
+        private const float mineFireRate = 10.0f;
+        private float mineFireCounter = 10.0f;
+        private const float mineOffset = 40.0f;
+        private const float mineAdjust = 10.0f;
+
         // Health data
         private const int maxLives = 3;
         private int currentLives = maxLives;
@@ -75,6 +80,7 @@ namespace GameTanks
 
             // Default data
             fireCounter = 0.0f;
+            mineFireCounter = 10.0f;
 
             // Setup physics
             setPhysicsEnabled();
@@ -111,6 +117,7 @@ namespace GameTanks
 
             // Update fire rate counter
             fireCounter += deltaTime;
+            mineFireCounter += deltaTime;
 
             // Render
             Bootstrap.getDisplay().addToDraw(this);
@@ -335,7 +342,13 @@ namespace GameTanks
         }
         public void dropMine()
         {
-            if (mineCounter > 1)
+            //if (mineCounter > 1)
+            //{
+            //    return;
+            //}
+
+            // Mine delay (try to get a mine counter instead)
+            if (mineFireCounter < mineFireRate)
             {
                 return;
             }
@@ -343,13 +356,15 @@ namespace GameTanks
             // Actually fire
             Mine1 mine = new Mine1();
 
+            //Transform.recalculateCentre();
             Vector2 cen = Transform.Centre;
-            Vector2 spawnLocation = shootOffset * -Transform.Forward;
+            Vector2 spawnLocation = (mineOffset * -Transform.Forward); // + (mineAdjust * Transform.Right);
             spawnLocation += cen;
 
             mine.setupMine(this, spawnLocation.X, spawnLocation.Y);
 
-            mineCounter = 1;
+            //mineCounter = 1;
+            mineFireCounter = 0.0f;
 
             // Play sound
             //Bootstrap.getSound().playSound("fire.wav");
@@ -385,6 +400,13 @@ namespace GameTanks
         private const float fireRate = 1.5f;
         private float fireCounter = 0.0f;
         private const float shootOffset = 30.0f;
+
+        // Mine data
+        //private int mineCounter = 0;
+        private const float mineFireRate = 10.0f;
+        private float mineFireCounter = 10.0f;
+        private const float mineOffset = 40.0f;
+        private const float mineAdjust = 10.0f;
 
         // Health data
         private const int maxLives = 3;
@@ -429,6 +451,7 @@ namespace GameTanks
 
             // Default data
             fireCounter = 0.0f;
+            mineFireCounter = 10.0f;
 
             setPhysicsEnabled();
             PhyBody.Mass = 150.0f;
@@ -461,6 +484,7 @@ namespace GameTanks
 
             // Update fire rate counter
             fireCounter += deltaTime;
+            mineFireCounter += deltaTime;
 
             // Render
             Bootstrap.getDisplay().addToDraw(this);
@@ -684,18 +708,23 @@ namespace GameTanks
 
         public void dropMine()
         {
+            if (mineFireCounter < mineFireRate)
+            {
+                return;
+            }
 
             // Actually fire
             Mine2 mine = new Mine2();
 
             Vector2 cen = Transform.Centre;
-            Vector2 spawnLocation = shootOffset * -Transform.Forward;
+            Vector2 spawnLocation = (mineOffset * -Transform.Forward); // + (mineAdjust * -Transform.Right);
             spawnLocation += cen;
 
             mine.setupMine(this, spawnLocation.X, spawnLocation.Y);
-            
+
             // Reset fire rate counter
             //fireCounter = 0.0f;
+            mineFireCounter = 0.0f;
 
             // Play sound
             //Bootstrap.getSound().playSound("fire.wav");
