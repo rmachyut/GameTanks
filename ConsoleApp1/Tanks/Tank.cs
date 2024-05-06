@@ -48,10 +48,14 @@ namespace GameTanks
         private int currentLives = maxLives;
         private bool bDead = false;
         private bool bGameEnd = false;
-        
+
+        // Health regeneration data
+        private const float regenerationRate = 10.0f; // Adjust as needed
+        private float regenerationCounter = 0.0f;
+
         // Accessors
         public bool IsDead { get => bDead; set => bDead = value; }
-        public bool IsGameEnd {  set => bGameEnd = value; }
+        public bool IsGameEnd { set => bGameEnd = value; }
         public int CurrentLives { get => currentLives; }
 
         public override void initialize()
@@ -124,6 +128,9 @@ namespace GameTanks
 
             //Show health
             showHealth();
+
+            // Call health regeneration method
+            regenerateHealth();
         }
 
         public override void physicsUpdate()
@@ -181,7 +188,7 @@ namespace GameTanks
                     PhyBody.addForce(this.Transform.Forward, -slowSpeed);
                 }
             }
-            
+
         }
 
         public void handleInput(InputEvent inp, string eventType)
@@ -313,7 +320,7 @@ namespace GameTanks
             // Play sound
             Bootstrap.getSound().playSound("fire.wav");
         }
-        
+
         // Health Bar
         public void showHealth()
         {
@@ -368,8 +375,29 @@ namespace GameTanks
 
             // Play sound
             //Bootstrap.getSound().playSound("fire.wav");
+
+        // Health regeneration method
+        private void regenerateHealth()
+        {
+            // Increment regeneration counter
+            regenerationCounter += (float)Bootstrap.getDeltaTime();
+
+            // Check if it's time to regenerate health
+            if (regenerationCounter >= regenerationRate)
+            {
+                // Regenerate health here
+                if (currentLives < maxLives)
+                {
+                    currentLives++; // Increase health by 1 (adjust as needed)
+                }
+
+                // Reset regeneration counter
+                regenerationCounter = 0.0f;
+            }
         }
     }
+
+
 
     ///////////////////////////////////////////////////////////////////////
     // TANK 2
@@ -414,6 +442,10 @@ namespace GameTanks
         private bool bDead = false;
         private bool bGameEnd = false;
 
+        // Health regeneration data
+        private const float regenerationRate = 10.0f; // Adjust as needed
+        private float regenerationCounter = 0.0f;
+
         // Accessors
         public bool IsDead { get => bDead; set => bDead = value; }
         public bool IsGameEnd { set => bGameEnd = value; }
@@ -433,7 +465,7 @@ namespace GameTanks
             /*Transform.X = 250.0f;
             Transform.Y = 200.0f;
             Transform.rotate(-90);
-*/
+            */
 
             // Setup sprite
             Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath("BlueTank.png");
@@ -472,7 +504,7 @@ namespace GameTanks
 
         public override void update()
         {
-            
+
             // If dead, don't update
             if (bDead)
             {
@@ -491,11 +523,14 @@ namespace GameTanks
 
             //Show health
             showHealth();
+
+            // Call health regeneration method
+            regenerateHealth();
         }
 
         public override void physicsUpdate()
         {
-            
+
             // If dead or end of game, don't update
             if (bDead || bGameEnd)
             {
@@ -551,7 +586,7 @@ namespace GameTanks
 
         public void handleInput(InputEvent inp, string eventType)
         {
-            
+
             // If dead, don't check for input??
             if (bDead)
             {
@@ -620,14 +655,14 @@ namespace GameTanks
         {
             if (x.Parent.checkTag("Bullet1") == true || x.Parent.checkTag("Mine1") == true)
             {
-                
+
                 currentLives--;
                 if (currentLives <= 0)
                 {
                     bDead = true;
                     this.ToBeDestroyed = true;
                 }
-                
+
             }
 
             // Collision with Tank 1
@@ -730,5 +765,24 @@ namespace GameTanks
             //Bootstrap.getSound().playSound("fire.wav");
         }
 
+        // Health regeneration method
+        private void regenerateHealth()
+        {
+            // Increment regeneration counter
+            regenerationCounter += (float)Bootstrap.getDeltaTime();
+
+            // Check if it's time to regenerate health
+            if (regenerationCounter >= regenerationRate)
+            {
+                // Regenerate health here
+                if (currentLives < maxLives)
+                {
+                    currentLives++; // Increase health by 1 
+                }
+
+                // Reset regeneration counter
+                regenerationCounter = 0.0f;
+            }
+        }
     }
 }
