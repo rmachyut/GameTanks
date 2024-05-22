@@ -33,7 +33,7 @@ namespace Shard
         {
             string text;
 
-            text = File.ReadAllText(file);
+                text = File.ReadAllText(file);
 
             return text;
         }
