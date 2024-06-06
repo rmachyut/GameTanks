@@ -116,9 +116,10 @@ namespace Shard
                         bWinner2 = true;
                     }
 
-                    state = GameState.End;
+                    
                     playerTank1.IsGameEnd = true;
                     playerTank2.IsGameEnd = true;
+                    state = GameState.End;
                 }
             }
             else if (state == GameState.End)
@@ -150,11 +151,8 @@ namespace Shard
                     fl = null;
                 }
 
-<<<<<<< HEAD
                 Bootstrap.getDisplay().clearDisplay();
 
-=======
->>>>>>> parent of 89518ee (main merge)
                 if (bWinner1)
                 {
                     Bootstrap.getDisplay().showText("RED Wins!", 370, 320, 70, Color.Red);

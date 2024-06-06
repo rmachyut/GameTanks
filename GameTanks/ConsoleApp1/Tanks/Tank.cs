@@ -196,7 +196,7 @@ namespace GameTanks
             // TODO:
 
             // If dead, don't check for input??
-            if (bDead)
+            if (bDead || bGameEnd)
             {
                 return;
             }
