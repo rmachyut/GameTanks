@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Uni\\Project\\GameEngine\\Altered\\GEAProject\\GameTanks\\ConsoleApp1\\Shard.csproj": {}
+  },
+  "projects": {
+    "D:\\Uni\\Project\\GameEngine\\Altered\\GEAProject\\GameTanks\\ConsoleApp1\\Shard.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Uni\\Project\\GameEngine\\Altered\\GEAProject\\GameTanks\\ConsoleApp1\\Shard.csproj",
+        "projectName": "Shard",
+        "projectPath": "D:\\Uni\\Project\\GameEngine\\Altered\\GEAProject\\GameTanks\\ConsoleApp1\\Shard.csproj",
+        "packagesPath": "C:\\Users\\boost\\.nuget\\packages\\",
+        "outputPath": "D:\\Uni\\Project\\GameEngine\\Altered\\GEAProject\\GameTanks\\ConsoleApp1\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\boost\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "SDL2-CS": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Sayers.SDL2.Core": {
+              "target": "Package",
+              "version": "[1.0.11, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

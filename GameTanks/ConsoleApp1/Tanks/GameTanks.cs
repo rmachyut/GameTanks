@@ -150,6 +150,11 @@ namespace Shard
                     fl = null;
                 }
 
+<<<<<<< Updated upstream:GameTanks/ConsoleApp1/Tanks/GameTanks.cs
+=======
+                Bootstrap.getDisplay().clearDisplay();
+
+>>>>>>> Stashed changes:ConsoleApp1/Tanks/GameTanks.cs
                 if (bWinner1)
                 {
                     Bootstrap.getDisplay().showText("RED Wins!", 370, 320, 70, Color.Red);

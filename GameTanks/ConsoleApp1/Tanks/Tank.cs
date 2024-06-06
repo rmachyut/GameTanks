@@ -31,6 +31,9 @@ namespace GameTanks
         private const float slowSpeed = 50f;
         private const float slowTurn = 15f;
 
+        //Center Positioning
+        private const float centerOff = 19.0f;
+
         // Shooting data
         private const float fireRate = 1.5f;
         private float fireCounter = 0.0f;
@@ -365,6 +368,7 @@ namespace GameTanks
 
             //Transform.recalculateCentre();
             Vector2 cen = Transform.Centre;
+            //Vector2 cen = Transform.Centre + (centerOff * -Transform.Forward) + (centerOff * Transform.Right);
             Vector2 spawnLocation = (mineOffset * -Transform.Forward); // + (mineAdjust * Transform.Right);
             spawnLocation += cen;
 
