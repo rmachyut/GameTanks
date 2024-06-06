@@ -150,8 +150,11 @@ namespace Shard
                     fl = null;
                 }
 
+<<<<<<< HEAD
                 Bootstrap.getDisplay().clearDisplay();
 
+=======
+>>>>>>> parent of 89518ee (main merge)
                 if (bWinner1)
                 {
                     Bootstrap.getDisplay().showText("RED Wins!", 370, 320, 70, Color.Red);
