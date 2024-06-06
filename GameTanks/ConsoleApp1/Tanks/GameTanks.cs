@@ -25,10 +25,11 @@ namespace Shard
         GameObject title = null;
 
         bool bWinner1 = false;
+        bool bWinner2 = false;
 
         private const float delay = 1;
         private float delayCount = 0;
-        private const float gameDuration = 5 * 60;
+        private const float gameDuration = 5; // * 60;
         private float elapsedTime = 0;
 
         public override void initialize()
@@ -110,10 +111,9 @@ namespace Shard
                     {
                         bWinner1 = true;
                     }
-
-                    if (elapsedTime >= gameDuration && !playerTank1.IsDead && !playerTank2.IsDead)
+                    else if (playerTank1.IsDead && !playerTank2.IsDead)
                     {
-                        bWinner1 = playerTank1.CurrentLives > playerTank2.CurrentLives;
+                        bWinner2 = true;
                     }
 
                     state = GameState.End;
@@ -150,19 +150,21 @@ namespace Shard
                     fl = null;
                 }
 
-<<<<<<< Updated upstream:GameTanks/ConsoleApp1/Tanks/GameTanks.cs
-=======
                 Bootstrap.getDisplay().clearDisplay();
 
->>>>>>> Stashed changes:ConsoleApp1/Tanks/GameTanks.cs
                 if (bWinner1)
                 {
                     Bootstrap.getDisplay().showText("RED Wins!", 370, 320, 70, Color.Red);
                     Bootstrap.getDisplay().showText("press SPACE to restart", 420, 520, 20, Color.White);
                 }
-                else
+                else if (bWinner2)
                 {
                     Bootstrap.getDisplay().showText("BLUE Wins!", 350, 320, 70, Color.Blue);
+                    Bootstrap.getDisplay().showText("press SPACE to restart", 420, 520, 20, Color.White);
+                }
+                else
+                {
+                    Bootstrap.getDisplay().showText("DRAW", 390, 320, 70, Color.Purple);
                     Bootstrap.getDisplay().showText("press SPACE to restart", 420, 520, 20, Color.White);
                 }
             }
