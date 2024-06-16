@@ -1,34 +1,28 @@
-﻿using Shard;
+﻿// In the GameTanks namespace
+
+using Shard;
 
 namespace GameTanks
 {
     class Health1 : GameObject
     {
-        private Tank1 owner;
-        public Tank1 Owner { get => owner; }
+        public Health Health { get; private set; }
 
-        public void setupHealth(Tank1 tank, float posX, float posY)
+        public Health1(float initialPosX, float initialPosY)
         {
-            owner = tank;
-            Transform.X = posX;
-            Transform.Y = posY;
-            Transform.Scalex = 2;
-            Transform.Scaley = 2;
+            Health = new Health();
+            Health.SetupHealth(this, initialPosX, initialPosY);
         }
     }
 
     class Health2 : GameObject
     {
-        private Tank2 owner;
-        public Tank2 Owner { get => owner; }
+        public Health Health { get; private set; }
 
-        public void setupHealth(Tank2 tank, float posX, float posY)
+        public Health2(float initialPosX, float initialPosY)
         {
-            owner = tank;
-            Transform.X = posX;
-            Transform.Y = posY;
-            Transform.Scalex = 2;
-            Transform.Scaley = 2;
+            Health = new Health();
+            Health.SetupHealth(this, initialPosX, initialPosY);
         }
     }
 }
