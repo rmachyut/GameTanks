@@ -1,5 +1,6 @@
 using SDL2;
 using Shard;
+using System.Collections.Generic;
 using System.Numerics;
 
 //Health Regen
@@ -42,6 +43,9 @@ namespace GameTanks
         private float mineFireCounter = 10.0f;
         private const float mineOffset = 40.0f;
         private const float mineAdjust = 10.0f;
+        
+        // Spawned mine
+        List<Mine1> mine1Array;
 
         // Health data
         private const int maxLives = 3;
@@ -53,6 +57,7 @@ namespace GameTanks
         private const float regenerationRate = 10.0f; // Adjust as needed
         private float regenerationCounter = 0.0f;
 
+        
         // Accessors
         public bool IsDead { get => bDead; set => bDead = value; }
         public bool IsGameEnd { set => bGameEnd = value; }
@@ -63,7 +68,7 @@ namespace GameTanks
             // TODO:
 
             // Setup position
-            Transform.X = 250.0f;
+            Transform.X = 260.0f;
             Transform.Y = 100.0f;
             Transform.rotate(90);
 
@@ -104,6 +109,8 @@ namespace GameTanks
 
             // Setup tag
             addTag("Tank1");
+
+            mine1Array = new List<Mine1>();
         }
 
         public override void update()
@@ -374,8 +381,25 @@ namespace GameTanks
             //mineCounter = 1;
             mineFireCounter = 0.0f;
 
+            mine1Array.Add(mine);
+
             // Play sound
             //Bootstrap.getSound().playSound("fire.wav");
+        }
+
+        public void clearMines()
+        {
+            for (int i = 0; i < mine1Array.Count; i++)
+            {
+                if (mine1Array[i] != null)
+                {
+                    mine1Array[i].ToBeDestroyed = true;
+                    mine1Array[i] = null;
+                }
+            }
+
+            mine1Array.Clear();
+            mine1Array = null;
         }
 
         // Health regeneration method
@@ -437,6 +461,9 @@ namespace GameTanks
         private float mineFireCounter = 10.0f;
         private const float mineOffset = 40.0f;
         private const float mineAdjust = 10.0f;
+
+        // Spawned mine
+        List<Mine2> mine2Array;
 
         // Health data
         private const int maxLives = 3;
@@ -502,6 +529,8 @@ namespace GameTanks
 
             // Setup tag
             addTag("Tank2");
+
+            mine2Array = new List<Mine2>();
         }
 
         public override void update()
@@ -764,12 +793,30 @@ namespace GameTanks
             //fireCounter = 0.0f;
             mineFireCounter = 0.0f;
 
+            mine2Array.Add(mine);
+
             // Play sound
             //Bootstrap.getSound().playSound("fire.wav");
         }
 
-        // Health regeneration method
-        private void regenerateHealth()
+    public void clearMines()
+    {
+        for (int i = 0; i < mine2Array.Count; i++)
+        {
+            if (mine2Array[i] != null)
+            {
+                mine2Array[i].ToBeDestroyed = true;
+                mine2Array[i] = null;
+            }
+        }
+
+        mine2Array.Clear();
+        mine2Array = null;
+    }
+
+
+    // Health regeneration method
+    private void regenerateHealth()
         {
             // Increment regeneration counter
             regenerationCounter += (float)Bootstrap.getDeltaTime();

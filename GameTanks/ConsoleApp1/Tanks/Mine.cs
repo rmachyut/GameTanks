@@ -44,10 +44,9 @@ namespace GameTanks
         {
             if (x.Parent.checkTag("Tank2") == true)
             {
-                Debug.Log("Hit Tank2");
+                Debug.Log("Mine:Hit Tank2");
 
                 ToBeDestroyed = true;
-
             }
         }
 
@@ -111,7 +110,7 @@ namespace GameTanks
         {
             if (x.Parent.checkTag("Tank1") == true)
             {
-                Debug.Log("Hit Tank1");
+                Debug.Log("Mine:Hit Tank1");
 
                 ToBeDestroyed = true;
 

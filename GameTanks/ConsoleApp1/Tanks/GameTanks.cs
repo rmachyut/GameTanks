@@ -126,12 +126,14 @@ namespace Shard
             {
                 if (playerTank1 != null)
                 {
+                    playerTank1.clearMines();
                     playerTank1.ToBeDestroyed = true;
                     playerTank1 = null;
                 }
 
                 if (playerTank2 != null)
                 {
+                    playerTank2.clearMines();
                     playerTank2.ToBeDestroyed = true;
                     playerTank2 = null;
                 }
