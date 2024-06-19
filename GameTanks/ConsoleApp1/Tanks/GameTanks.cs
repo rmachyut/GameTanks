@@ -58,10 +58,10 @@ namespace Shard
                 float remainingTime = gameDuration - elapsedTime;
                 int minutes = (int)(remainingTime / 60);
                 int seconds = (int)(remainingTime % 60);
-                string timeText = $"Time: {minutes:00}:{seconds:00}";
+                string timeText = $"{minutes:00}:{seconds:00}";
 
                 // Display the remaining time
-                Bootstrap.getDisplay().showTextAlt(timeText, "Corbel", 20, 20, 30, 255, 255, 255);
+                Bootstrap.getDisplay().showTextAlt(timeText, "Corbel", 450, 8, 30, 255, 255, 255);
 
                 if (p1 == null)
                 {
