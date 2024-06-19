@@ -324,7 +324,9 @@ namespace GameTanks
         // Health Bar
         public void showHealth()
         {
-            Health1 h1 = new Health1(30, 350);
+            Health h1 = new Health();
+            h1.SetupHealth(this, 50, 350);
+
             if (currentLives == 3)
             {
                 h1.Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath("Red3Health.png");
@@ -717,7 +719,9 @@ namespace GameTanks
 
         public void showHealth()
         {
-            Health2 h2 = new Health2(850,350);
+            Health h2 = new Health();
+            h2.SetupHealth(this, 850, 350);
+
             if (currentLives == 3)
             {
                 h2.Transform.SpritePath = Bootstrap.getAssetManager().getAssetPath("Blue3Health.png");
