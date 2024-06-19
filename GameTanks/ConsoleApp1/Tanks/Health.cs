@@ -6,23 +6,23 @@ namespace GameTanks
 {
     class Health1 : GameObject
     {
-        public Health Health { get; private set; }
+        public Health Player1 { get; private set; }
 
         public Health1(float initialPosX, float initialPosY)
         {
-            Health = new Health();
-            Health.SetupHealth(this, initialPosX, initialPosY);
+            Player1 = new Health();
+            Player1.SetupHealth(this, initialPosX, initialPosY);
         }
     }
 
     class Health2 : GameObject
     {
-        public Health Health { get; private set; }
+        public Health Player2 { get; private set; }
 
         public Health2(float initialPosX, float initialPosY)
         {
-            Health = new Health();
-            Health.SetupHealth(this, initialPosX, initialPosY);
+            Player2 = new Health();
+            Player2.SetupHealth(this, initialPosX, initialPosY);
         }
     }
 }

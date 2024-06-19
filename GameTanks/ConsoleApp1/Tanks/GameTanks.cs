@@ -29,7 +29,7 @@ namespace Shard
 
         private const float delay = 1;
         private float delayCount = 0;
-        private const float gameDuration = 5; // * 60;
+        private const float gameDuration = 5 * 60;
         private float elapsedTime = 0;
 
         public override void initialize()
@@ -165,7 +165,7 @@ namespace Shard
                 }
                 else
                 {
-                    Bootstrap.getDisplay().showText("DRAW", 390, 320, 70, Color.Purple);
+                    Bootstrap.getDisplay().showText("DRAW", 420, 320, 70, Color.Purple);
                     Bootstrap.getDisplay().showText("press SPACE to restart", 420, 520, 20, Color.White);
                 }
             }
