@@ -37,6 +37,9 @@ namespace GameTanks
         private float fireCounter = 0.0f;
         private const float shootOffset = 30.0f;
 
+        //Spawned Bullets
+        List<Bullet1> bullet1Array;
+
         // Mine data
         //private int mineCounter = 0;
         private const float mineFireRate = 10.0f;
@@ -111,6 +114,7 @@ namespace GameTanks
             addTag("Tank1");
 
             mine1Array = new List<Mine1>();
+            bullet1Array = new List<Bullet1>();
         }
 
         public override void update()
@@ -324,6 +328,7 @@ namespace GameTanks
             // Reset fire rate counter
             fireCounter = 0.0f;
 
+            bullet1Array.Add(bullet);
             // Play sound
             Bootstrap.getSound().playSound("fire.wav");
         }
@@ -385,6 +390,21 @@ namespace GameTanks
 
             // Play sound
             //Bootstrap.getSound().playSound("fire.wav");
+        }
+
+        public void clearBullets()
+        {
+            for (int i = 0; i < bullet1Array.Count; i++)
+            {
+                if (bullet1Array[i] != null)
+                {
+                    bullet1Array[i].ToBeDestroyed = true;
+                    bullet1Array[i] = null;
+                }
+            }
+
+            bullet1Array.Clear();
+            bullet1Array = null;
         }
 
         public void clearMines()
@@ -454,6 +474,9 @@ namespace GameTanks
         private const float fireRate = 1.5f;
         private float fireCounter = 0.0f;
         private const float shootOffset = 30.0f;
+
+        //Spawned bullets
+        List<Bullet2> bullet2Array;
 
         // Mine data
         //private int mineCounter = 0;
@@ -531,6 +554,7 @@ namespace GameTanks
             addTag("Tank2");
 
             mine2Array = new List<Mine2>();
+            bullet2Array = new List<Bullet2>();
         }
 
         public override void update()
@@ -742,6 +766,8 @@ namespace GameTanks
             // Reset fire rate counter
             fireCounter = 0.0f;
 
+            bullet2Array.Add(bullet);
+
             // Play sound
             Bootstrap.getSound().playSound("fire.wav");
         }
@@ -799,20 +825,34 @@ namespace GameTanks
             //Bootstrap.getSound().playSound("fire.wav");
         }
 
-    public void clearMines()
-    {
-        for (int i = 0; i < mine2Array.Count; i++)
+        public void clearBullets()
         {
-            if (mine2Array[i] != null)
+            for (int i = 0; i < bullet2Array.Count; i++)
             {
-                mine2Array[i].ToBeDestroyed = true;
-                mine2Array[i] = null;
+                if (bullet2Array[i] != null)
+                {
+                    bullet2Array[i].ToBeDestroyed = true;
+                    bullet2Array[i] = null;
+                }
             }
-        }
 
-        mine2Array.Clear();
-        mine2Array = null;
-    }
+            bullet2Array.Clear();
+            bullet2Array = null;
+        }
+        public void clearMines()
+        {
+            for (int i = 0; i < mine2Array.Count; i++)
+            {
+                if (mine2Array[i] != null)
+                {
+                    mine2Array[i].ToBeDestroyed = true;
+                    mine2Array[i] = null;
+                }
+            }
+
+            mine2Array.Clear();
+            mine2Array = null;
+        }
 
 
     // Health regeneration method
