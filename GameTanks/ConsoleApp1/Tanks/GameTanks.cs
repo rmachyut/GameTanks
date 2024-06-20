@@ -1,7 +1,10 @@
-using GameTanks;
-using SDL2;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using GameTanks;
+using System.Runtime.InteropServices;
+using SDL2;
 
 namespace Shard
 {
@@ -32,8 +35,24 @@ namespace Shard
         private const float gameDuration = 5 * 60;
         private float elapsedTime = 0;
 
+        string musicPath;
+        IntPtr music;
+
         public override void initialize()
         {
+            if (SDL_mixer.Mix_OpenAudio(44100, SDL.AUDIO_S16SYS, 2, 4096) == -1)
+            {
+                throw new Exception("SDL_mixer could not initialize! SDL_mixer Error: " + SDL.SDL_GetError());
+            }
+
+            musicPath = Bootstrap.getAssetManager().getAssetPath("background_music.mp3");
+
+            music = SDL_mixer.Mix_LoadMUS(musicPath);
+            if (music == IntPtr.Zero)
+            {
+                throw new Exception("Failed to load beat music! SDL_mixer Error: " + SDL.SDL_GetError());
+            }
+
             Bootstrap.getInput().addListener(this);
 
             if (state == GameState.MainMenu)
@@ -54,13 +73,17 @@ namespace Shard
             }
             else if (state == GameState.Play)
             {
+                if (SDL_mixer.Mix_PlayingMusic() == 0)
+                {
+                    SDL_mixer.Mix_PlayMusic(music, -1);
+                }
+
                 elapsedTime += (float)Bootstrap.getDeltaTime();
                 float remainingTime = gameDuration - elapsedTime;
                 int minutes = (int)(remainingTime / 60);
                 int seconds = (int)(remainingTime % 60);
                 string timeText = $"{minutes:00}:{seconds:00}";
 
-                // Display the remaining time
                 Bootstrap.getDisplay().showTextAlt(timeText, "Corbel", 450, 8, 30, 255, 255, 255);
 
                 if (p1 == null)
@@ -116,7 +139,7 @@ namespace Shard
                         bWinner2 = true;
                     }
 
-                    
+
                     playerTank1.IsGameEnd = true;
                     playerTank2.IsGameEnd = true;
                     state = GameState.End;
@@ -124,6 +147,8 @@ namespace Shard
             }
             else if (state == GameState.End)
             {
+                SDL_mixer.Mix_HaltMusic();
+
                 if (playerTank1 != null)
                 {
                     playerTank1.clearMines();
@@ -175,7 +200,6 @@ namespace Shard
             }
         }
 
-
         public void handleInput(InputEvent inp, string eventType)
         {
             if (state == GameState.MainMenu)
@@ -186,7 +210,7 @@ namespace Shard
                     {
                         p1 = null;
                         p2 = null;
-                        elapsedTime = 0; // Reset the timer when starting the game
+                        elapsedTime = 0; 
                         state = GameState.Play;
                     }
                 }
@@ -199,7 +223,7 @@ namespace Shard
                     {
                         p1 = null;
                         p2 = null;
-                        elapsedTime = 0; // Reset the timer when restarting the game
+                        elapsedTime = 0; 
                         state = GameState.MainMenu;
                     }
                 }
@@ -209,6 +233,13 @@ namespace Shard
         public override int getTargetFrameRate()
         {
             return 144;
+        }
+
+        public new void dispose()
+        {
+            SDL_mixer.Mix_FreeMusic(music);
+            SDL_mixer.Mix_CloseAudio();
+            base.dispose();
         }
 
         private void setupFloor()
@@ -242,4 +273,30 @@ namespace Shard
             }
         }
     }
+}
+
+public static class SDL_mixer
+{
+    private const string nativeLibName = "SDL2_mixer.dll";
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int Mix_OpenAudio(int frequency, ushort format, int channels, int chunksize);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr Mix_LoadMUS(string file);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int Mix_PlayMusic(IntPtr music, int loops);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void Mix_FreeMusic(IntPtr music);
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void Mix_HaltMusic();
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void Mix_CloseAudio();
+
+    [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+    public static extern int Mix_PlayingMusic();
 }

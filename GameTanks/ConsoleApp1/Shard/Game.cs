@@ -41,5 +41,9 @@ namespace Shard
             return Int32.MaxValue; 
         }
 
+        internal void dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

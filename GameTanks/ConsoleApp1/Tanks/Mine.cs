@@ -47,6 +47,8 @@ namespace GameTanks
                 Debug.Log("Mine:Hit Tank2");
 
                 ToBeDestroyed = true;
+
+                Bootstrap.getSound().playSound("explosion.wav");
             }
         }
 
@@ -113,6 +115,8 @@ namespace GameTanks
                 Debug.Log("Mine:Hit Tank1");
 
                 ToBeDestroyed = true;
+
+                Bootstrap.getSound().playSound("explosion.wav");
 
             }
         }
